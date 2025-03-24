@@ -1,20 +1,22 @@
-name: Deploy Supabase Functions
+name: Deploy Supabase Function
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # 用官方脚本安装 supabase CLI
       - name: Install Supabase CLI
         run: |
-          curl -L https://supabase.com/cli/install/linux | sh -s -- -b .
+          curl -o install.sh -L https://supabase.com/cli/install/linux
+          chmod +x install.sh
+          ./install.sh -b .
           sudo mv supabase /usr/local/bin
 
       - name: Supabase login
