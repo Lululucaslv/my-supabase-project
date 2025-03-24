@@ -1,4 +1,4 @@
-name: Deploy Supabase Function
+name: Deploy Supabase Functions
 
 on:
   push:
@@ -9,15 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Check out repository
         uses: actions/checkout@v3
 
       - name: Install Supabase CLI
         run: |
-          curl -o install.sh -L https://supabase.com/cli/install/linux
-          chmod +x install.sh
-          ./install.sh -b .
-          sudo mv supabase /usr/local/bin
+          # 下载 Supabase CLI 二进制文件（请确认版本号是否最新）
+          curl -L https://github.com/supabase/cli/releases/download/v1.67.2/supabase_1.67.2_linux_amd64.tar.gz -o supabase.tar.gz
+          # 解压出可执行文件
+          tar -xzf supabase.tar.gz supabase
+          # 移动到全局 PATH 中
+          sudo mv supabase /usr/local/bin/
 
       - name: Supabase login
         run: supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
