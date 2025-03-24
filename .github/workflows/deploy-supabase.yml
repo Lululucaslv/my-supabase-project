@@ -11,11 +11,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      # 用官方脚本安装 supabase CLI
       - name: Install Supabase CLI
         run: |
-          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          npm install --global supabase@latest
+          curl -L https://supabase.com/cli/install/linux | sh -s -- -b .
+          sudo mv supabase /usr/local/bin
 
       - name: Supabase login
         run: supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
