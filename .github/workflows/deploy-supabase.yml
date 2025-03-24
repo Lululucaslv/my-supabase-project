@@ -1,0 +1,24 @@
+name: Deploy Supabase Functions
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install Supabase CLI
+        run: |
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          npm install --global supabase@latest
+
+      - name: Supabase login
+        run: supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Deploy Edge Function
+        run: supabase functions deploy ai-assistant
