@@ -1,33 +1,31 @@
-name: Deploy Supabase Functions
+name: Deploy Supabase Edge Function
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Supabase CLI
+      - name: Install Supabase CLI (v2.19.7)
         run: |
-          # 设置 Supabase CLI 版本（请根据官方 Releases 页面确认版本）
-          SUPABASE_VERSION=2.19.7
-          echo "Using Supabase CLI version ${SUPABASE_VERSION}"
-          # 下载 Supabase CLI 二进制包
-          curl -L "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/supabase_${SUPABASE_VERSION}_linux_amd64.tar.gz" -o supabase.tar.gz
-          # 检查下载的文件类型
-          file supabase.tar.gz
-          # 解压出可执行文件
+          curl -L "https://github.com/supabase/cli/releases/download/v2.19.7/supabase_2.19.7_linux_amd64.tar.gz" -o supabase.tar.gz
           tar -xzf supabase.tar.gz supabase
-          # 移动到全局路径
-          sudo mv supabase /usr/local/bin/
+          sudo mv supabase /usr/local/bin/supabase
+          supabase --version
 
-      - name: Supabase login
-        run: supabase login --token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - name: Set up Supabase secrets
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          supabase login --access-token "$SUPABASE_ACCESS_TOKEN"
 
-      - name: Deploy Edge Function
-        run: supabase functions deploy ai-assistant
+      - name: Deploy edge function
+        run: |
+          supabase functions deploy ai-assistant
