@@ -13,19 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Supabase CLI (v2.19.7)
+      - name: Install Supabase CLI
         run: |
-          curl -L "https://github.com/supabase/cli/releases/download/v2.19.7/supabase_2.19.7_linux_amd64.tar.gz" -o supabase.tar.gz
-          tar -xzf supabase.tar.gz supabase
+          curl -sL https://supabase.com/cli/install/linux | sh
           sudo mv supabase /usr/local/bin/supabase
           supabase --version
 
-      - name: Set up Supabase secrets
+      - name: Set up Supabase authentication
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
           supabase login --access-token "$SUPABASE_ACCESS_TOKEN"
 
-      - name: Deploy edge function
+      - name: Deploy Edge Function
         run: |
           supabase functions deploy ai-assistant
+
+
