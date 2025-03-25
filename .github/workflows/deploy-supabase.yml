@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Supabase CLI
         run: |
-          curl -sL https://supabase.com/cli/install/linux | sh
+          curl -sL https://supabase.com/cli/install/linux | bash
           sudo mv supabase /usr/local/bin/supabase
           supabase --version
 
