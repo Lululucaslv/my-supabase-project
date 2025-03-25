@@ -14,16 +14,16 @@ jobs:
 
       - name: Install Supabase CLI
         run: |
-          # 设置 Supabase CLI 版本（请根据实际最新版本修改）
-          SUPABASE_VERSION=1.84.2
+          # 设置 Supabase CLI 版本（请根据官方 Releases 页面确认版本）
+          SUPABASE_VERSION=1.67.2
           echo "Using Supabase CLI version ${SUPABASE_VERSION}"
           # 下载 Supabase CLI 二进制包
           curl -L "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/supabase_${SUPABASE_VERSION}_linux_amd64.tar.gz" -o supabase.tar.gz
           # 检查下载的文件类型
           file supabase.tar.gz
-          # 解压出可执行文件（确保返回的结果为 gzip 格式的 tar archive）  
+          # 解压出可执行文件
           tar -xzf supabase.tar.gz supabase
-          # 移动到全局路径以便后续命令可用
+          # 移动到全局路径
           sudo mv supabase /usr/local/bin/
 
       - name: Supabase login
