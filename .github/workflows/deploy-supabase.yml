@@ -15,7 +15,7 @@ jobs:
       - name: Install Supabase CLI
         run: |
           # 设置 Supabase CLI 版本（请根据官方 Releases 页面确认版本）
-          SUPABASE_VERSION=2.20.3
+          SUPABASE_VERSION=2.19.7
           echo "Using Supabase CLI version ${SUPABASE_VERSION}"
           # 下载 Supabase CLI 二进制包
           curl -L "https://github.com/supabase/cli/releases/download/v${SUPABASE_VERSION}/supabase_${SUPABASE_VERSION}_linux_amd64.tar.gz" -o supabase.tar.gz
